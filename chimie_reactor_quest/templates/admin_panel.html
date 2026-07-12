@@ -6,50 +6,54 @@
     <div class="section-head">
       <div class="eyebrow">Administrare</div>
       <h1>Management Utilizatori</h1>
-      <p class="lead">Aici poți șterge conturi sau schimba rolurile utilizatorilor (Elev / Profesor / Admin).</p>
     </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    {% endwith %}
 
     <section class="panel">
       <div class="panel-head">
         <h2>Baza de date utilizatori</h2>
-        <span class="tiny-muted">Atenție la ștergeri!</span>
       </div>
       <div class="leaderboard-table full">
         <div class="leader-row top" style="font-weight: bold; background: var(--bg-alt);">
           <div class="leader-row-rank">ID</div>
           <div class="leader-row-name">Nume și Utilizator</div>
-          <div class="leader-row-role">Schimbă Rol</div>
+          <div class="leader-row-role">Rol</div>
           <div class="leader-row-score">Acțiuni</div>
         </div>
         
-        {% for u in all_users %}
+        {% for u in users %}
         <div class="leader-row">
-          <div class="leader-row-rank">#{{ u.id }}</div>
+          <div class="leader-row-rank">#{{ u[0] }}</div>
           <div class="leader-row-name">
-            <strong>{{ u.full_name }}</strong><br>
-            <span class="tiny-muted">@{{ u.username }}</span>
+            <strong>{{ u[1] }}</strong><br>
+            <span class="tiny-muted">{{ u[2] if u[2] else 'Fără email' }}</span>
           </div>
           <div class="leader-row-role">
-            <form method="post" action="{{ url_for('admin_change_role', user_id=u.id) }}" class="stack-form" style="margin:0; width: auto;">
-              <select name="new_role" onchange="this.form.submit()" style="padding: 4px 8px; font-size: 14px;">
-                <option value="elev" {% if u.role == 'elev' %}selected{% endif %}>Elev</option>
-                <option value="profesor" {% if u.role == 'profesor' %}selected{% endif %}>Profesor</option>
-                <option value="admin" {% if u.role == 'admin' %}selected{% endif %}>Admin</option>
+            <form method="post" action="{{ url_for('change_role', user_id=u[0]) }}" class="stack-form" style="margin:0; width: auto;">
+              <select name="new_role" onchange="this.form.submit()" style="padding: 4px 8px; font-size: 14px; border-radius: 4px; background: var(--bg-panel); color: var(--text-color); border: 1px solid var(--border-color);">
+                <option value="elev" {% if u[3] == 'elev' %}selected{% endif %}>Elev</option>
+                <option value="profesor" {% if u[3] == 'profesor' %}selected{% endif %}>Profesor</option>
+                <option value="admin" {% if u[3] == 'admin' %}selected{% endif %}>Admin</option>
               </select>
             </form>
           </div>
           <div class="leader-row-score">
-            {% if u.id != current_user.id %}
-            <form method="post" action="{{ url_for('admin_delete_user', user_id=u.id) }}" onsubmit="return confirm('Ești sigur că vrei să ștergi acest cont? Toate progresele lui vor fi pierdute!');">
+            <form method="post" action="{{ url_for('delete_user', user_id=u[0]) }}" onsubmit="return confirm('Sigur ștergi acest cont?');">
               <button type="submit" class="btn ghost small" style="color: #ff4d4d; border-color: rgba(255, 77, 77, 0.2);">Șterge</button>
             </form>
-            {% else %}
-            <span class="tiny-muted">Contul tău</span>
-            {% endif %}
           </div>
         </div>
         {% else %}
-        <div class="empty-state">Nu există alți utilizatori.</div>
+        <div class="empty-state">Nu există alți utilizatori înregistrați.</div>
         {% endfor %}
       </div>
     </section>
