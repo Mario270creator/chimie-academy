@@ -36,6 +36,9 @@
             <a class="{% if request.endpoint in ['lab_page', 'pitch_timer'] %}active{% endif %}" href="{{ url_for('lab_page') }}">Laborator</a>
             <a class="{% if request.endpoint == 'leaderboard_page' %}active{% endif %}" href="{{ url_for('leaderboard_page') }}">Clasament</a>
             <a class="{% if request.endpoint == 'vault_page' %}active{% endif %}" href="{{ url_for('vault_page') }}">Export</a>
+            {% if current_user.role == 'admin' %}
+              <a class="{% if request.endpoint == 'admin_dashboard' %}active{% endif %}" href="{{ url_for('admin_dashboard') }}" style="color: #ff4d4d; font-weight: bold;">Admin</a>
+            {% endif %}
           {% else %}
             <a class="{% if request.endpoint == 'lab_page' %}active{% endif %}" href="{{ url_for('lab_page') }}">Laborator</a>
             <a class="{% if request.endpoint == 'pitch_timer' %}active{% endif %}" href="{{ url_for('pitch_timer') }}">Cronometru</a>
