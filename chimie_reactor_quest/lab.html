@@ -1,62 +1,90 @@
 {% extends "base.html" %}
-{% block title %}Laborator · {{ site_name }}{% endblock %}
+{% block title %}Teste · {{ site_name }}{% endblock %}
 {% block content %}
 <section class="section page-top">
   <div class="container">
-    {% if not current_user %}
-    <section class="panel public-callout">
+    <div class="section-head">
+      <div class="eyebrow">Teste și verificare</div>
+      <h1>Teste cu scor, istoric și puncte.</h1>
+    </div>
+
+    {% if current_user.role == 'profesor' %}
+    <section class="panel">
       <div class="panel-head">
-        <h2>Acces public activ</h2>
-        <span class="tiny-muted">Fără cont</span>
+        <h2>Creează un test nou</h2>
+        <span class="tiny-muted">Constructor cu întrebări dinamice</span>
       </div>
-      <p class="small-note">Laboratorul este deschis public. Pentru clase, teste și progres personal poți intra apoi în demo sau în contul tău.</p>
-      <div class="inline-actions">
-        <a class="btn primary small" href="{{ url_for('demo_login', role='elev') }}">Demo instant</a>
-        <a class="btn ghost small" href="{{ url_for('login') }}">Login</a>
-      </div>
+      <form method="post" action="{{ url_for('create_quiz') }}" class="stack-form" id="quizBuilderForm">
+        <div class="grid-form two">
+          <label>
+            <span>Clasa</span>
+            <select name="class_id" required>
+              {% for cls in classes %}
+              <option value="{{ cls.id }}">{{ cls.name }} {{ cls.section }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <label>
+            <span>Puncte</span>
+            <input type="number" name="xp" min="20" max="300" value="120">
+          </label>
+          <label class="full">
+            <span>Titlu</span>
+            <input type="text" name="title" placeholder="Test · ..." required>
+          </label>
+          <label class="full">
+            <span>Descriere</span>
+            <textarea name="description" rows="3" placeholder="Explică ce testează quiz-ul." required></textarea>
+          </label>
+          <label>
+            <span>Dificultate</span>
+            <select name="difficulty">
+              <option>Standard</option>
+              <option>Avansat</option>
+              <option>Recapitulare finală</option>
+            </select>
+          </label>
+        </div>
+
+        <input type="hidden" name="questions_payload" id="questionsPayload">
+
+        <div class="builder-head">
+          <h3>Întrebări</h3>
+          <button class="btn ghost small" type="button" id="addQuestionBtn">+ Adaugă întrebare</button>
+        </div>
+        <div id="questionBuilder" class="builder-list"></div>
+
+        <div class="form-actions">
+          <button class="btn primary" type="submit">Publică testul</button>
+        </div>
+      </form>
     </section>
     {% endif %}
 
-    <div class="section-head">
-      <div class="eyebrow">Laborator interactiv</div>
-      <h1>Laboratorul vizual rămâne inclus și este integrat direct în platformă.</h1>
-      <p class="lead">Ai tabel periodic interactiv, motor de reacții, test rapid și calculator de masă molară. Pe mobil îl poți deschide și pe tot ecranul.</p>
-    </div>
-
-    <div class="dashboard-grid">
-      <section class="panel">
-        <div class="panel-head">
-          <h2>Instrumente rapide</h2>
-          <a href="{{ url_for('pitch_timer') }}">Cronometru prezentare</a>
+    <section class="arena-grid">
+      {% for quiz in quizzes %}
+      <article class="arena-card big">
+        <div class="arena-topline">
+          <span class="pill">{{ quiz.class_name }} {{ quiz.class_section }}</span>
+          <span class="pill accent">{{ quiz.xp }} puncte</span>
         </div>
-        <div class="rules-grid">
-          <div class="rule-card">
-            <strong>Laborator complet</strong>
-            <p>Deschide laboratorul în pagină sau într-un tab separat, dacă vrei mai mult spațiu.</p>
-            <a class="btn primary small" href="{{ url_for('static', filename='legacy_lab/laborator.html') }}" target="_blank">Deschide separat</a>
-          </div>
-          <div class="rule-card">
-            <strong>Timer prezentare</strong>
-            <p>Repetă o prezentare scurtă cu formatul 10 + 5 și păstrează-ți ritmul clar.</p>
-            <a class="btn ghost small" href="{{ url_for('pitch_timer') }}">Pornește cronometrul</a>
-          </div>
-          <div class="rule-card">
-            <strong>Telefon + desktop</strong>
-            <p>Pe telefon glisezi în tabel și folosești fullscreen; pe desktop ai spațiu pentru explorare rapidă.</p>
-          </div>
+        <h3>{{ quiz.title }}</h3>
+        <p>{{ quiz.description }}</p>
+        <div class="arena-meta">
+          <span>{{ quiz.difficulty }}</span>
+          {% if current_user.role == 'elev' %}
+            <span>Scor maxim: {{ "%.0f"|format(quiz.best_score) }}%</span>
+            <span>Încercări: {{ quiz.attempt_count }}</span>
+          {% else %}
+            <span>Participanți: {{ quiz.participant_count }}</span>
+          {% endif %}
         </div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-head">
-          <h2>Preview live</h2>
-          <span class="tiny-muted">Mod integrat</span>
-        </div>
-        <div class="lab-frame-shell">
-          <iframe src="{{ url_for('static', filename='legacy_lab/laborator.html') }}" title="Modul laborator integrat"></iframe>
-        </div>
-      </section>
-    </div>
+        <a class="btn primary" href="{{ url_for('play_quiz', quiz_id=quiz.id) }}">Deschide testul</a>
+      </article>
+      {% else %}
+      <div class="empty-state">Niciun test activ.</div>
+      {% endfor %}
+    </section>
   </div>
 </section>
 {% endblock %}

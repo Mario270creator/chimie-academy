@@ -1,98 +1,62 @@
-<!doctype html>
-<html lang="ro">
-<head>
-  <meta charset="utf-8">
-  <title>{{ project.acronym }} · Export proiect</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <style>
-    body{background:#f7f9ff;color:#0b1220}
-    .print-shell{max-width:960px;margin:0 auto;padding:32px 20px 60px}
-    .print-card{background:white;border:1px solid rgba(15,23,42,.08);border-radius:24px;padding:28px;box-shadow:0 16px 40px rgba(15,23,42,.08)}
-    .print-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-    .print-grid .full{grid-column:1/-1}
-    .print-kicker{font-size:.84rem;text-transform:uppercase;letter-spacing:.18em;color:#5d7cfb;margin-bottom:8px}
-    .print-shell h1{margin:0 0 8px 0;font-size:2rem}
-    .print-shell h2{margin:0 0 10px 0;font-size:1.1rem}
-    .print-shell p{margin:.2rem 0 0 0;line-height:1.7}
-    .print-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
-    .print-meta span{background:#eef3ff;border-radius:999px;padding:8px 12px;font-size:.92rem}
-    .print-block{padding:18px;border-radius:18px;background:#f8fbff;border:1px solid rgba(93,124,251,.14)}
-    .print-actions{display:flex;gap:12px;margin:0 0 16px 0}
-    @media print{
-      .print-actions{display:none}
-      body{background:white}
-      .print-card{box-shadow:none;border:none}
-    }
-  </style>
-</head>
-<body>
-  <div class="print-shell">
-    <div class="print-actions">
-      <button class="btn primary" type="button" onclick="window.print()">Printează / salvează PDF</button>
-      <a class="btn ghost" href="{{ url_for('oncs_page', project=project.id) }}">Înapoi în studio</a>
+{% extends "base.html" %}
+{% block title %}Laborator · {{ site_name }}{% endblock %}
+{% block content %}
+<section class="section page-top">
+  <div class="container">
+    {% if not current_user %}
+    <section class="panel public-callout">
+      <div class="panel-head">
+        <h2>Acces public activ</h2>
+        <span class="tiny-muted">Fără cont</span>
+      </div>
+      <p class="small-note">Laboratorul este deschis public. Pentru clase, teste și progres personal poți intra apoi în demo sau în contul tău.</p>
+      <div class="inline-actions">
+        <a class="btn primary small" href="{{ url_for('demo_login', role='elev') }}">Demo instant</a>
+        <a class="btn ghost small" href="{{ url_for('login') }}">Login</a>
+      </div>
+    </section>
+    {% endif %}
+
+    <div class="section-head">
+      <div class="eyebrow">Laborator interactiv</div>
+      <h1>Laboratorul vizual rămâne inclus și este integrat direct în platformă.</h1>
+      <p class="lead">Ai tabel periodic interactiv, motor de reacții, test rapid și calculator de masă molară. Pe mobil îl poți deschide și pe tot ecranul.</p>
     </div>
 
-    <div class="print-card">
-      <div class="print-kicker">Export proiect ONCS</div>
-      <h1>{{ project.title }}</h1>
-      <div class="print-meta">
-        <span>Acronim: {{ project.acronym }}</span>
-        <span>Categorie: {{ project.team_category }}</span>
-        <span>Secțiune: {{ project.section }}</span>
-        {% if project.class_name %}<span>Clasă: {{ project.class_name }} {{ project.class_section }}</span>{% endif %}
-      </div>
+    <div class="dashboard-grid">
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Instrumente rapide</h2>
+          <a href="{{ url_for('pitch_timer') }}">Cronometru prezentare</a>
+        </div>
+        <div class="rules-grid">
+          <div class="rule-card">
+            <strong>Laborator complet</strong>
+            <p>Deschide laboratorul în pagină sau într-un tab separat, dacă vrei mai mult spațiu.</p>
+            <a class="btn primary small" href="{{ url_for('static', filename='legacy_lab/laborator.html') }}" target="_blank">Deschide separat</a>
+          </div>
+          <div class="rule-card">
+            <strong>Timer prezentare</strong>
+            <p>Repetă o prezentare scurtă cu formatul 10 + 5 și păstrează-ți ritmul clar.</p>
+            <a class="btn ghost small" href="{{ url_for('pitch_timer') }}">Pornește cronometrul</a>
+          </div>
+          <div class="rule-card">
+            <strong>Telefon + desktop</strong>
+            <p>Pe telefon glisezi în tabel și folosești fullscreen; pe desktop ai spațiu pentru explorare rapidă.</p>
+          </div>
+        </div>
+      </section>
 
-      <div class="print-grid">
-        <section class="print-block">
-          <h2>Echipă</h2>
-          <p><strong>Membru 1:</strong> {{ project.member_one }} — {{ project.member_one_role }}</p>
-          <p><strong>Membru 2:</strong> {{ project.member_two }} — {{ project.member_two_role }}</p>
-          <p><strong>Mentor:</strong> {{ project.mentor_name }}</p>
-          <p><strong>Unitate școlară:</strong> {{ project.school_name }}</p>
-          <p><strong>Data de început:</strong> {{ project.started_on }}</p>
-        </section>
-
-        <section class="print-block">
-          <h2>Conformitate</h2>
-          <p><strong>{{ compliance.percent }}%</strong> completare curentă.</p>
-          <ul>
-            {% for label, ok in compliance.checks %}
-            <li>{{ '✔' if ok else '✖' }} {{ label }}</li>
-            {% endfor %}
-          </ul>
-        </section>
-
-        <section class="print-block full">
-          <h2>Problema identificată</h2>
-          <p>{{ project.problem }}</p>
-        </section>
-
-        <section class="print-block full">
-          <h2>Obiective</h2>
-          <p>{{ project.objectives }}</p>
-        </section>
-
-        <section class="print-block full">
-          <h2>Metode folosite</h2>
-          <p>{{ project.methods }}</p>
-        </section>
-
-        <section class="print-block full">
-          <h2>Noutate / originalitate</h2>
-          <p>{{ project.novelty }}</p>
-        </section>
-
-        <section class="print-block full">
-          <h2>Rezultate</h2>
-          <p>{{ project.results }}</p>
-        </section>
-
-        <section class="print-block full">
-          <h2>Pași următori</h2>
-          <p>{{ project.next_steps }}</p>
-        </section>
-      </div>
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Preview live</h2>
+          <span class="tiny-muted">Mod integrat</span>
+        </div>
+        <div class="lab-frame-shell">
+          <iframe src="{{ url_for('static', filename='legacy_lab/laborator.html') }}" title="Modul laborator integrat"></iframe>
+        </div>
+      </section>
     </div>
   </div>
-</body>
-</html>
+</section>
+{% endblock %}

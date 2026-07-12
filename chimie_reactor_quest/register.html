@@ -1,48 +1,53 @@
 {% extends "base.html" %}
-{% block title %}Cont nou · {{ site_name }}{% endblock %}
+{% block title %}Cronometru prezentare · {{ site_name }}{% endblock %}
 {% block content %}
-<section class="auth-section">
-  <div class="container auth-grid">
-    <div class="auth-intro">
-      <div class="eyebrow">Înregistrare</div>
-      <h1>Creează-ți contul.</h1>
-      <p>Poți porni fie ca profesor, fie ca elev. După intrare, site-ul te duce direct în panoul principal.</p>
-      <ul class="bullet-list">
-        <li>Profesor: creează clase, lecții, teste și anunțuri.</li>
-        <li>Elev: parcurge lecții, rezolvă teste și își urmărește progresul.</li>
-        <li>Totul rămâne organizat în backend-ul local.</li>
-      </ul>
+<section class="section page-top">
+  <div class="container narrow">
+    {% if not current_user %}
+    <section class="panel public-callout">
+      <div class="panel-head">
+        <h2>Timer public</h2>
+        <span class="tiny-muted">Acces rapid</span>
+      </div>
+      <p class="small-note">Cronometrul este disponibil fără autentificare, ca să poți repeta oricând o prezentare scurtă.</p>
+      <div class="inline-actions">
+        <a class="btn primary small" href="{{ url_for('lab_page') }}">Mergi în laborator</a>
+        <a class="btn ghost small" href="{{ url_for('demo_login', role='elev') }}">Demo instant</a>
+      </div>
+    </section>
+    {% endif %}
+
+    <div class="section-head">
+      <div class="eyebrow">Cronometru prezentare</div>
+      <h1>Exersează o prezentare în formatul 10 minute + 5 minute.</h1>
     </div>
 
-    <div class="panel form-panel">
-      <form method="post" class="stack-form">
-        <label>
-          <span>Nume complet</span>
-          <input type="text" name="full_name" placeholder="Nume Prenume" required>
-        </label>
-        <label>
-          <span>Utilizator</span>
-          <input type="text" name="username" placeholder="utilizator" required>
-        </label>
-        <label>
-          <span>Parolă</span>
-          <input type="password" name="password" placeholder="minim 4 caractere" required>
-        </label>
-        <label>
-          <span>Rol</span>
-          <select name="role" required>
-            <option value="elev">Elev</option>
-            <option value="profesor">Profesor</option>
-          </select>
-        </label>
-        <label>
-          <span>Bio scurt</span>
-          <textarea name="bio" rows="4" placeholder="Ex: coordonez un club de chimie / sunt pasionat de experimente și formule."></textarea>
-        </label>
-        <button class="btn primary large" type="submit">Creează contul</button>
-      </form>
-      <p class="small-note">Ai deja cont? <a href="{{ url_for('login') }}">Autentifică-te</a>.</p>
-    </div>
+    <section class="panel timer-panel">
+      <div class="timer-mode-tabs">
+        <button class="btn primary small" type="button" data-timer-mode="presentation">Prezentare 10 min</button>
+        <button class="btn ghost small" type="button" data-timer-mode="qa">Q&A 5 min</button>
+        <button class="btn ghost small" type="button" data-timer-mode="custom">Personalizat</button>
+      </div>
+
+      <div class="custom-time-grid">
+        <label><span>Minute</span><input type="number" min="0" max="59" value="10" data-timer-minutes></label>
+        <label><span>Secunde</span><input type="number" min="0" max="59" value="0" data-timer-seconds></label>
+      </div>
+
+      <div class="timer-display" data-timer-display>10:00</div>
+      <p class="timer-note" data-timer-label>Mod: Prezentare</p>
+
+      <div class="inline-actions centered">
+        <button class="btn primary" type="button" data-timer-start>Start</button>
+        <button class="btn ghost" type="button" data-timer-pause>Pauză</button>
+        <button class="btn ghost" type="button" data-timer-reset>Reset</button>
+      </div>
+
+      <div class="info-stack">
+        <div class="tiny-card">Folosește timerul înainte de o susținere, ca să îți disciplinezi structura și ritmul.</div>
+        <div class="tiny-card">Un model simplu: 1 minut problemă, 2 minute metodă, 3 minute rezultate, 2 minute noutate, 2 minute concluzii.</div>
+      </div>
+    </section>
   </div>
 </section>
 {% endblock %}

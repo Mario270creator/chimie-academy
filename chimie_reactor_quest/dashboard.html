@@ -1,194 +1,245 @@
 {% extends "base.html" %}
-{% block title %}Panou principal · {{ site_name }}{% endblock %}
+{% block title %}ONCS Studio · {{ site_name }}{% endblock %}
 {% block content %}
 <section class="section page-top">
   <div class="container">
-    <div class="page-hero">
-      <div>
-        <div class="eyebrow">Panou principal</div>
-        <h1>Bine ai venit, {{ current_user.full_name }}.</h1>
-        <p class="lead">
-          Ai nivelul de progres <strong>{{ user_level.title }}</strong>, {{ user_level.xp }} puncte și
-          {% if user_level.remaining > 0 %}
-            mai ai {{ user_level.remaining }} puncte până la <strong>{{ user_level.next_title }}</strong>.
-          {% else %}
-            ai atins nivelul maxim disponibil.
-          {% endif %}
-        </p>
-      </div>
-      <div class="hero-chip-stack">
-        <a class="btn primary" href="{{ url_for('lab_page') }}">Intră în laborator</a>
-        <a class="btn ghost" href="{{ url_for('arena_page') }}">Rezolvă teste</a>
-        <a class="btn ghost" href="{{ url_for('pitch_timer') }}">Timer</a>
-      </div>
-    </div>
-
-    <div class="level-track">
-      <div class="level-track-fill" style="width: {{ user_level.progress }}%"></div>
-    </div>
-
-    <div class="stats-grid">
-      <article class="stat-card">
-        <span>Clase</span>
-        <strong>{{ stats.class_count }}</strong>
-      </article>
-      <article class="stat-card">
-        <span>Lecții</span>
-        <strong>{{ stats.lesson_count }}</strong>
-      </article>
-      <article class="stat-card">
-        <span>Teste</span>
-        <strong>{{ stats.quiz_count }}</strong>
-      </article>
-      <article class="stat-card">
-        <span>Scor mediu</span>
-        <strong>{{ stats.avg_score }}%</strong>
-      </article>
+    <div class="section-head">
+      <div class="eyebrow">ONCS Studio</div>
+      <h1>Zona în care proiectul arată serios, clar și gata de jurizare.</h1>
+      <p class="lead">Am transformat regulamentul în instrumente practice: navigator de secțiune, timer, checklist, rubrică și export de proiect.</p>
     </div>
 
     <div class="dashboard-grid">
       <section class="panel">
         <div class="panel-head">
-          <h2>Lecții active</h2>
-          <a href="{{ url_for('quests_page') }}">Vezi toate</a>
+          <h2>{{ 'Editează proiectul' if selected_project else 'Creează proiect nou' }}</h2>
+          {% if selected_project %}
+            <a href="{{ url_for('export_project', project_id=selected_project.id) }}" target="_blank">Exportă proiectul</a>
+          {% endif %}
         </div>
-        <div class="card-list">
-          {% for lesson in quests %}
-          <article class="quest-card">
-            <div class="quest-top">
-              <span class="pill">{{ lesson.class_name }} {{ lesson.class_section }}</span>
-              <span class="pill accent">{{ lesson.xp }} puncte</span>
-            </div>
-            <h3>{{ lesson.title }}</h3>
-            <p>{{ lesson.summary }}</p>
-            <div class="quest-meta">
-              <span>{{ lesson.difficulty }}</span>
-              {% if current_user.role == 'elev' %}
-                {% if lesson.is_completed %}
-                  <span class="status good">finalizată</span>
-                {% else %}
-                  <form method="post" action="{{ url_for('complete_lesson', lesson_id=lesson.id) }}">
-                    <button class="btn ghost small" type="submit">Marchează completă</button>
-                  </form>
-                {% endif %}
-              {% else %}
-                <span>{{ lesson.completion_count }} completări</span>
-              {% endif %}
-            </div>
-          </article>
-          {% else %}
-          <div class="empty-state">Nu există încă lecții. Creează sau înscrie-te într-o clasă.</div>
-          {% endfor %}
-        </div>
+
+        <form method="post" action="{% if selected_project %}{{ url_for('update_project', project_id=selected_project.id) }}{% else %}{{ url_for('create_project') }}{% endif %}" class="grid-form two">
+          <label class="full">
+            <span>Titlu proiect</span>
+            <input type="text" name="title" value="{{ selected_project.title if selected_project else '' }}" placeholder="Ex: EcoLab" required>
+          </label>
+          <label>
+            <span>Acronim</span>
+            <input type="text" name="acronym" value="{{ selected_project.acronym if selected_project else '' }}" placeholder="ECO-ION" required>
+          </label>
+          <label>
+            <span>Clasa asociată</span>
+            <select name="class_id">
+              <option value="">Fără clasă</option>
+              {% for cls in classes %}
+              <option value="{{ cls.id }}" {% if selected_project and selected_project.class_id == cls.id %}selected{% endif %}>{{ cls.name }} {{ cls.section }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <label>
+            <span>Categorie</span>
+            <select name="team_category" required>
+              <option value="Juniori" {% if selected_project and selected_project.team_category == 'Juniori' %}selected{% endif %}>Juniori</option>
+              <option value="Seniori" {% if selected_project and selected_project.team_category == 'Seniori' %}selected{% endif %}>Seniori</option>
+            </select>
+          </label>
+          <label>
+            <span>Secțiune</span>
+            <select name="section" required>
+              <option value="A" {% if selected_project and selected_project.section == 'A' %}selected{% endif %}>A · Științe fundamentale</option>
+              <option value="B" {% if selected_project and selected_project.section == 'B' %}selected{% endif %}>B · Științe aplicate</option>
+              <option value="C" {% if selected_project and selected_project.section == 'C' %}selected{% endif %}>C · Tehnologia informației</option>
+            </select>
+          </label>
+          <label>
+            <span>Mentor</span>
+            <input type="text" name="mentor_name" value="{{ selected_project.mentor_name if selected_project else current_user.full_name }}" placeholder="Nume mentor" required>
+          </label>
+          <label>
+            <span>Unitate școlară</span>
+            <input type="text" name="school_name" value="{{ selected_project.school_name if selected_project else '' }}" placeholder="Școala / colegiul" required>
+          </label>
+          <label>
+            <span>Membru 1</span>
+            <input type="text" name="member_one" value="{{ selected_project.member_one if selected_project else current_user.full_name }}" required>
+          </label>
+          <label>
+            <span>Rol membru 1</span>
+            <input type="text" name="member_one_role" value="{{ selected_project.member_one_role if selected_project else '' }}" placeholder="Experiment / cod / analiză" required>
+          </label>
+          <label>
+            <span>Membru 2</span>
+            <input type="text" name="member_two" value="{{ selected_project.member_two if selected_project else '' }}" required>
+          </label>
+          <label>
+            <span>Rol membru 2</span>
+            <input type="text" name="member_two_role" value="{{ selected_project.member_two_role if selected_project else '' }}" required>
+          </label>
+          <label class="full">
+            <span>Problema identificată</span>
+            <textarea name="problem" rows="4" required>{{ selected_project.problem if selected_project else '' }}</textarea>
+          </label>
+          <label class="full">
+            <span>Obiective</span>
+            <textarea name="objectives" rows="4" required>{{ selected_project.objectives if selected_project else '' }}</textarea>
+          </label>
+          <label class="full">
+            <span>Metode folosite</span>
+            <textarea name="methods" rows="5" required>{{ selected_project.methods if selected_project else '' }}</textarea>
+          </label>
+          <label class="full">
+            <span>Noutate / originalitate</span>
+            <textarea name="novelty" rows="4" required>{{ selected_project.novelty if selected_project else '' }}</textarea>
+          </label>
+          <label class="full">
+            <span>Rezultate</span>
+            <textarea name="results" rows="5" required>{{ selected_project.results if selected_project else '' }}</textarea>
+          </label>
+          <label class="full">
+            <span>Pași următori</span>
+            <textarea name="next_steps" rows="4" required>{{ selected_project.next_steps if selected_project else '' }}</textarea>
+          </label>
+          <label>
+            <span>Data de început a studiului</span>
+            <input type="date" name="started_on" value="{{ selected_project.started_on if selected_project else today_iso }}" required>
+          </label>
+          <div class="form-actions">
+            <button class="btn primary" type="submit">{{ 'Salvează modificările' if selected_project else 'Creează proiectul' }}</button>
+          </div>
+        </form>
       </section>
 
-      <section class="panel">
+      <aside class="panel aside-panel">
         <div class="panel-head">
-          <h2>Teste de verificare</h2>
-          <a href="{{ url_for('arena_page') }}">Vezi toate</a>
+          <h2>Checklist rapid</h2>
+          <a href="{{ url_for('pitch_timer') }}">Timer pitch</a>
         </div>
-        <div class="card-list">
-          {% for quiz in arenas %}
-          <article class="arena-card">
-            <div class="quest-top">
-              <span class="pill">{{ quiz.class_name }} {{ quiz.class_section }}</span>
-              <span class="pill accent">{{ quiz.xp }} puncte max</span>
-            </div>
-            <h3>{{ quiz.title }}</h3>
-            <p>{{ quiz.description }}</p>
-            <div class="quest-meta">
-              <span>{{ quiz.difficulty }}</span>
-              {% if current_user.role == 'elev' %}
-                <span>Scor maxim: {{ "%.0f"|format(quiz.best_score) }}%</span>
-              {% else %}
-                <span>{{ quiz.participant_count }} participanți</span>
-              {% endif %}
-            </div>
-            <a class="btn primary small" href="{{ url_for('play_quiz', quiz_id=quiz.id) }}">Deschide testul</a>
-          </article>
-          {% else %}
-          <div class="empty-state">Niciun test activ momentan.</div>
-          {% endfor %}
+        {% if compliance %}
+        <div class="compliance-box">
+          <div class="compliance-line">
+            <strong>{{ compliance.percent }}%</strong>
+            <span>completare curentă</span>
+          </div>
+          <div class="level-track slim">
+            <div class="level-track-fill" style="width: {{ compliance.percent }}%"></div>
+          </div>
+          <ul class="check-list">
+            {% for label, ok in compliance.checks %}
+            <li class="{{ 'ok' if ok else 'missing' }}">{{ '✔' if ok else '✖' }} {{ label }}</li>
+            {% endfor %}
+          </ul>
+          <ul class="warning-list">
+            {% for warning in compliance.warnings %}
+            <li>{{ warning }}</li>
+            {% endfor %}
+          </ul>
         </div>
-      </section>
+        {% else %}
+        <div class="empty-state">Creează primul proiect ca să vezi progresul de conformitate.</div>
+        {% endif %}
+
+        <div class="rules-stack">
+          <div class="tiny-card"><strong>2 elevi / echipă</strong><br>Fără echipă extinsă.</div>
+          <div class="tiny-card"><strong>1 proiect / echipă</strong><br>Clar și bine delimitat.</div>
+          <div class="tiny-card"><strong>Pitch 10 + 5</strong><br>10 minute prezentare, 5 minute întrebări.</div>
+          <div class="tiny-card"><strong>Poster 80 × 120</strong><br>Stand lizibil și aerisit.</div>
+        </div>
+      </aside>
     </div>
 
     <div class="dashboard-grid lower">
       <section class="panel">
         <div class="panel-head">
-          <h2>Realizări</h2>
-          <span class="tiny-muted">Progres vizibil</span>
+          <h2>Navigator de secțiune</h2>
+          <span class="tiny-muted">Ghidează încadratea A / B / C</span>
         </div>
-        <div class="badge-grid">
-          {% for badge in badges %}
-          <div class="badge-card">
-            <div class="badge-icon">{{ badge.icon }}</div>
-            <strong>{{ badge.title }}</strong>
-            <p>{{ badge.desc }}</p>
-          </div>
-          {% endfor %}
+        <div class="grid-form two">
+          <label>
+            <span>Scopul principal</span>
+            <select data-nav-goal>
+              <option value="A">Avansare teoretică / cercetare fundamentală</option>
+              <option value="B">Rezolvare practică / prototip / aplicație</option>
+              <option value="C">Software / algoritm / tehnologie digitală</option>
+            </select>
+          </label>
+          <label>
+            <span>Metoda dominantă</span>
+            <select data-nav-method>
+              <option value="A">Modelare, analiză, demonstrație</option>
+              <option value="B">Experiment, testare, prototip</option>
+              <option value="C">Programare, analiză de date, AI</option>
+            </select>
+          </label>
+          <label class="full">
+            <span>Impactul dorit</span>
+            <select data-nav-impact>
+              <option value="A">Cunoaștere științifică și explicații</option>
+              <option value="B">Aplicații industriale, sociale sau medicale</option>
+              <option value="C">Progres tehnologic și produse digitale</option>
+            </select>
+          </label>
         </div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-head">
-          <h2>Scurtături utile</h2>
-          <span class="tiny-muted">Acces rapid</span>
-        </div>
-        <div class="compliance-box">
-          <div class="compliance-line">
-            <strong>{{ stats.completed_count }}</strong>
-            <span>lecții parcurse</span>
-          </div>
-          <div class="level-track slim">
-            <div class="level-track-fill" style="width: {{ user_level.progress }}%"></div>
-          </div>
-          <ul class="warning-list">
-            <li>Deschide laboratorul separat când vrei spațiu maxim pentru simulator.</li>
-            <li>Folosește testele pentru recapitulare rapidă înainte de verificare.</li>
-            <li>Timerul te ajută să îți ții prezentarea într-un ritm clar.</li>
-          </ul>
-        </div>
-        <div class="quick-rule-grid">
-          <a class="tiny-card" href="{{ url_for('lab_page') }}">🔬 Intră în laborator</a>
-          <a class="tiny-card" href="{{ url_for('arena_page') }}">📝 Vezi testele</a>
-          <a class="tiny-card" href="{{ url_for('quests_page') }}">📘 Deschide lecțiile</a>
-          <a class="tiny-card" href="{{ url_for('pitch_timer') }}">⏱️ Pornește timerul</a>
+        <div class="navigator-result" data-nav-result>
+          Recomandare: <strong>Secțiunea A</strong> · proiect orientat spre înțelegere teoretică și rigoare științifică.
         </div>
       </section>
 
       <section class="panel">
         <div class="panel-head">
-          <h2>Feed de clasă</h2>
-          <a href="{{ url_for('classes_page') }}">Toate anunțurile</a>
+          <h2>Rubrică de autoevaluare</h2>
+          <span class="tiny-muted">Punctaj maxim 100</span>
         </div>
-        <div class="feed-list">
-          {% for ann in stats.announcements %}
-          <article class="feed-item">
-            <span class="pill">{{ ann.class_name }} {{ ann.class_section }}</span>
-            <h3>{{ ann.title }}</h3>
-            <p>{{ ann.content }}</p>
-          </article>
-          {% else %}
-          <div class="empty-state">Nu există încă anunțuri.</div>
-          {% endfor %}
+        <div class="rubric-grid" data-rubric>
+          <label><span>Creativitate (0-25)</span><input type="range" min="0" max="25" value="18" data-rubric-input></label>
+          <label><span>Abordare științifică (0-15)</span><input type="range" min="0" max="15" value="10" data-rubric-input></label>
+          <label><span>Obiective clare (0-10)</span><input type="range" min="0" max="10" value="8" data-rubric-input></label>
+          <label><span>Complexitate (0-10)</span><input type="range" min="0" max="10" value="7" data-rubric-input></label>
+          <label><span>Prezentare vizuală/orală (0-15)</span><input type="range" min="0" max="15" value="11" data-rubric-input></label>
+          <label><span>Muncă în echipă (0-15)</span><input type="range" min="0" max="15" value="12" data-rubric-input></label>
+          <label><span>Din oficiu (0-10)</span><input type="range" min="0" max="10" value="10" data-rubric-input></label>
+        </div>
+        <div class="rubric-total">Scor estimat: <strong data-rubric-total>76</strong> / 100</div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Reguli de siguranță și stand</h2>
+          <span class="tiny-muted">Gata de verificare</span>
+        </div>
+        <div class="info-stack">
+          <div class="tiny-card">Exponat maxim: 50 cm adâncime × 80 cm lățime × 120 cm înălțime.</div>
+          <div class="tiny-card">Poster maxim: 80 cm lățime × 120 cm înălțime.</div>
+          <div class="tiny-card">Nu aduce materiale chimice periculoase, substanțe inflamabile sau dispozitive riscante pe stand.</div>
+          <div class="tiny-card">Nu folosi fotografii care identifică persoane fără acord și evită logo-urile nepermise pe stand.</div>
         </div>
       </section>
     </div>
 
-    <section class="panel leaderboard-panel">
+    <section class="panel">
       <div class="panel-head">
-        <h2>Top clasament</h2>
-        <a href="{{ url_for('leaderboard_page') }}">Clasament complet</a>
+        <h2>Proiectele tale</h2>
       </div>
-      <div class="leaderboard-table">
-        {% for item in board %}
-        <div class="leader-row">
-          <div class="leader-row-rank">#{{ loop.index }}</div>
-          <div class="leader-row-name">{{ item.icon }} {{ item.full_name }}</div>
-          <div class="leader-row-role">{{ item.role|capitalize }}</div>
-          <div class="leader-row-score">{{ item.xp }} puncte</div>
-        </div>
+      <div class="class-grid">
+        {% for project in projects %}
+        <article class="class-card">
+          <div class="class-card-top">
+            <div>
+              <h3>{{ project.acronym }} · {{ project.title }}</h3>
+              <p>{{ project.team_category }} · Secțiunea {{ project.section }}{% if project.class_name %} · {{ project.class_name }} {{ project.class_section }}{% endif %}</p>
+            </div>
+            <span class="pill accent">{{ project.updated_at[:10] }}</span>
+          </div>
+          <div class="class-stats">
+            <span>👥 {{ project.member_one }} + {{ project.member_two }}</span>
+            <span>🧭 Mentor: {{ project.mentor_name }}</span>
+          </div>
+          <div class="inline-actions">
+            <a class="btn ghost small" href="{{ url_for('oncs_page', project=project.id) }}">Editează</a>
+            <a class="btn primary small" href="{{ url_for('export_project', project_id=project.id) }}" target="_blank">Exportă</a>
+          </div>
+        </article>
+        {% else %}
+        <div class="empty-state">Nu ai proiecte create încă.</div>
         {% endfor %}
       </div>
     </section>
