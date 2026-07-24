@@ -1,0 +1,4 @@
+Ca să adaugi fotografii reale pentru elemente în tabelul periodic,
+urcă fișiere numite exact așa:  element_H.jpg, element_Fe.jpg, element_Cu.jpg etc.
+(prefix "element_" + simbolul elementului + .jpg). Site-ul le folosește
+automat în locul ilustrațiilor procedurale.

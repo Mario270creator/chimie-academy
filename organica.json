@@ -1,0 +1,195 @@
+{
+  "code": "CHIMORG",
+  "class": {
+    "name": "Chimie Organică",
+    "section": "Extra",
+    "description": "Modul suplimentar: hidrocarburi — alcani, alchene, alchine și arene. Include generatorul de structuri și arena de antrenament."
+  },
+  "lessons": [
+    {
+      "title": "Lecția O1 · Ce este chimia organică?",
+      "summary": "Carbonul tetravalent, catenele și clasificarea hidrocarburilor.",
+      "xp": 45,
+      "difficulty": "Introductiv",
+      "content": "Chimia organică studiază compușii carbonului. Carbonul este special pentru că este TETRAVALENT: fiecare atom de carbon formează exact 4 legături covalente.\n\nAtomii de carbon se pot lega între ei formând CATENE (lanțuri): liniare, ramificate sau ciclice. De aceea există milioane de compuși organici.\n\nHIDROCARBURILE sunt compușii formați DOAR din carbon și hidrogen. Le clasificăm astfel:\n• SATURATE — doar legături simple C−C → alcani (ex: metan CH₄, etan C₂H₆)\n• NESATURATE — au legături duble C=C → alchene (ex: etenă C₂H₄) sau triple C≡C → alchine (ex: etină C₂H₂)\n• AROMATICE (ARENE) — conțin nucleul benzenic (ex: benzen C₆H₆)\n\nRegulă de aur: în orice formulă corectă, fiecare C are 4 legături, iar fiecare H are exact 1 legătură.\n\n💡 Deschide pagina „Organică” din meniu și folosește generatorul ca să vezi structurile desenate."
+    },
+    {
+      "title": "Lecția O2 · Alcanii — hidrocarburi saturate",
+      "summary": "Seria CₙH₂ₙ₊₂, denumiri de la metan la decan, proprietăți și ardere.",
+      "xp": 55,
+      "difficulty": "Mediu",
+      "content": "Alcanii sunt hidrocarburi SATURATE: toate legăturile dintre atomii de carbon sunt simple.\n\nFORMULA GENERALĂ: CₙH₂ₙ₊₂\nVerificare: pentru n=1 → CH₄ (metan); n=2 → C₂H₆ (etan); n=3 → C₃H₈ (propan); n=4 → C₄H₁₀ (butan).\n\nDENUMIRI (primii 10 termeni): metan, etan, propan, butan, pentan, hexan, heptan, octan, nonan, decan. Sufixul este mereu „-an”.\n\nSTARE DE AGREGARE (la 25°C): C₁–C₄ gaze, C₅–C₁₇ lichide, C₁₈+ solide.\n\nPROPRIETATE CHIMICĂ PRINCIPALĂ — ARDEREA:\nCH₄ + 2O₂ → CO₂ + 2H₂O + energie\nDe aceea metanul (gazul natural) și butanul (brichete, butelii) sunt combustibili.\n\nIZOMERIE: de la butan în sus, aceeași formulă moleculară poate avea structuri diferite. C₄H₁₀ există ca n-butan (catenă liniară) și izobutan (catenă ramificată) — 2 izomeri.\n\n🎯 Exersează în „Organică → Arena de antrenament”, categoria Alcani."
+    },
+    {
+      "title": "Lecția O3 · Alchenele — legătura dublă",
+      "summary": "Seria CₙH₂ₙ, etena, denumirea cu locant și reacția de adiție.",
+      "xp": 55,
+      "difficulty": "Mediu",
+      "content": "Alchenele sunt hidrocarburi NESATURATE care conțin o legătură DUBLĂ C=C.\n\nFORMULA GENERALĂ: CₙH₂ₙ (n ≥ 2)\nExemple: C₂H₄ etenă, C₃H₆ propenă, C₄H₈ butenă.\n\nDENUMIRE: sufixul „-enă”. De la 4 atomi de carbon în sus precizăm poziția legăturii duble cu un LOCANT — cel mai mic număr posibil:\nCH₂=CH−CH₂−CH₃ → but-1-enă\nCH₃−CH=CH−CH₃ → but-2-enă\n\nETENA (C₂H₄) este cea mai importantă alchenă: din ea se obține POLIETILENA (pungile și foliile de plastic) prin polimerizare. Tot etena grăbește coacerea fructelor.\n\nREACȚIA CARACTERISTICĂ — ADIȚIA: legătura dublă se „deschide” și acceptă atomi noi.\nC₂H₄ + H₂ → C₂H₆ (adiția hidrogenului)\nC₂H₄ + Br₂ → C₂H₄Br₂ (decolorarea apei de brom = testul pentru nesaturare!)\n\n💡 În constructorul de catene, apasă pe o legătură ca să o transformi din simplă în dublă și urmărește cum se schimbă numele și formula."
+    },
+    {
+      "title": "Lecția O4 · Alchinele — legătura triplă",
+      "summary": "Seria CₙH₂ₙ₋₂, acetilena și flacăra de sudură.",
+      "xp": 55,
+      "difficulty": "Mediu",
+      "content": "Alchinele sunt hidrocarburi NESATURATE care conțin o legătură TRIPLĂ C≡C.\n\nFORMULA GENERALĂ: CₙH₂ₙ₋₂ (n ≥ 2)\nExemple: C₂H₂ etină, C₃H₄ propină, C₄H₆ butină.\n\nDENUMIRE: sufixul „-ină”, cu locant de la 4 atomi de carbon: but-1-ină, but-2-ină.\n\nETINA (C₂H₂), numită popular ACETILENĂ, are structura H−C≡C−H. Arde cu o flacără foarte fierbinte (~3000°C în oxigen), de aceea se folosește la SUDURA ȘI TĂIEREA metalelor (flacăra oxiacetilenică):\n2C₂H₂ + 5O₂ → 4CO₂ + 2H₂O + energie\n\nCa și alchenele, alchinele dau reacții de ADIȚIE și decolorează apa de brom — semn de nesaturare.\n\nATENȚIE la comparație: pentru același n, alcanul are cei mai mulți H, alchena cu 2 mai puțini, alchina cu 4 mai puțini. Exemplu n=2: C₂H₆ / C₂H₄ / C₂H₂."
+    },
+    {
+      "title": "Lecția O5 · Arenele — benzenul și nucleul aromatic",
+      "summary": "C₆H₆, hexagonul aromatic, toluenul și unde întâlnim arenele.",
+      "xp": 60,
+      "difficulty": "Avansat",
+      "content": "ARENELE (hidrocarburile aromatice) conțin NUCLEUL BENZENIC: un ciclu de 6 atomi de carbon.\n\nBENZENUL, C₆H₆, este cea mai simplă arenă. Kekulé l-a desenat ca un hexagon cu legături duble și simple alternante. În realitate, cei 6 electroni sunt DELOCALIZAȚI pe tot ciclul — de aceea benzenul se desenează adesea ca un hexagon cu un CERC în interior. Toate legăturile C−C din benzen sunt identice!\n\nFORMULA GENERALĂ a seriei: CₙH₂ₙ₋₆ (n ≥ 6).\nUrmătorul termen: METILBENZENUL (toluenul), C₇H₈ — un nucleu benzenic cu o grupare −CH₃.\n\nDeși pare foarte nesaturat, benzenul NU decolorează ușor apa de brom — nucleul aromatic este neobișnuit de stabil. Reacțiile lui caracteristice sunt de SUBSTITUȚIE, nu de adiție.\n\nUNDE ÎNTÂLNIM ARENE: în benzină, în materiale plastice (polistiren), coloranți, medicamente (aspirina se obține pornind de la arene).\n\n⚠️ Benzenul este TOXIC și cancerigen — în laboratorul școlar nu se lucrează cu el; îl studiem doar teoretic.\n\n🔬 Deschide „Organică → Generator” și alege „Arene” ca să vezi hexagonul benzenic desenat în ambele reprezentări."
+    }
+  ],
+  "quizzes": [
+    {
+      "title": "Test O1 · Alcanii",
+      "description": "Formule moleculare, denumiri și proprietățile hidrocarburilor saturate.",
+      "xp": 140,
+      "difficulty": "Standard",
+      "questions": [
+        {
+          "text": "Care este formula generală a alcanilor?",
+          "options": [
+            "CₙH₂ₙ₊₂",
+            "CₙH₂ₙ",
+            "CₙH₂ₙ₋₂",
+            "CₙH₂ₙ₋₆"
+          ],
+          "correct": 0,
+          "explanation": "Alcanii sunt saturați: CₙH₂ₙ₊₂. Pentru n=1 obținem CH₄."
+        },
+        {
+          "text": "Ce alcan are formula C₅H₁₂?",
+          "options": [
+            "Butan",
+            "Pentan",
+            "Hexan",
+            "Propan"
+          ],
+          "correct": 1,
+          "explanation": "Prefixul „pent-” înseamnă 5 atomi de carbon: pentan, C₅H₁₂."
+        },
+        {
+          "text": "Câți atomi de hidrogen are octanul?",
+          "options": [
+            "16",
+            "20",
+            "18",
+            "17"
+          ],
+          "correct": 2,
+          "explanation": "Octan: n=8, deci H = 2·8+2 = 18. Formula: C₈H₁₈."
+        },
+        {
+          "text": "Care este produsul arderii complete a metanului?",
+          "options": [
+            "CO₂ și H₂O",
+            "CO și H₂",
+            "C și H₂O",
+            "doar CO₂"
+          ],
+          "correct": 0,
+          "explanation": "CH₄ + 2O₂ → CO₂ + 2H₂O + energie."
+        },
+        {
+          "text": "În condiții normale (25°C), butanul este:",
+          "options": [
+            "lichid",
+            "solid",
+            "gaz",
+            "plasmă"
+          ],
+          "correct": 2,
+          "explanation": "Termenii C₁–C₄ ai seriei alcanilor sunt gaze — de aceea butanul stă comprimat în brichete."
+        },
+        {
+          "text": "Câți izomeri are C₄H₁₀?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": 1,
+          "explanation": "n-butan (catenă liniară) și izobutan (catenă ramificată)."
+        }
+      ]
+    },
+    {
+      "title": "Test O2 · Nesaturate și arene",
+      "description": "Alchene, alchine, benzen: formule generale, denumiri cu locant și reacții.",
+      "xp": 150,
+      "difficulty": "Avansat",
+      "questions": [
+        {
+          "text": "Care serie are formula generală CₙH₂ₙ?",
+          "options": [
+            "Alcanii",
+            "Alchenele",
+            "Alchinele",
+            "Arenele"
+          ],
+          "correct": 1,
+          "explanation": "Legătura dublă „consumă” 2 atomi de H față de alcan: CₙH₂ₙ."
+        },
+        {
+          "text": "CH₃−CH=CH−CH₃ se numește:",
+          "options": [
+            "but-1-enă",
+            "but-2-enă",
+            "butan",
+            "but-2-ină"
+          ],
+          "correct": 1,
+          "explanation": "Legătura dublă începe la carbonul 2 → but-2-enă."
+        },
+        {
+          "text": "Ce hidrocarbură are formula C₃H₄?",
+          "options": [
+            "Propan",
+            "Propenă",
+            "Propină",
+            "Benzen"
+          ],
+          "correct": 2,
+          "explanation": "2·3−2 = 4 atomi de H → seria alchinelor: propină."
+        },
+        {
+          "text": "Acetilena (etina) se folosește la:",
+          "options": [
+            "coacerea fructelor",
+            "sudura metalelor",
+            "pungile de plastic",
+            "parfumuri"
+          ],
+          "correct": 1,
+          "explanation": "Flacăra oxiacetilenică atinge ~3000°C — ideală pentru sudură și tăiere."
+        },
+        {
+          "text": "Formula moleculară a benzenului este:",
+          "options": [
+            "C₆H₁₂",
+            "C₆H₆",
+            "C₆H₁₄",
+            "C₆H₈"
+          ],
+          "correct": 1,
+          "explanation": "Benzenul: nucleu de 6 atomi de C cu 6 atomi de H — C₆H₆, seria CₙH₂ₙ₋₆."
+        },
+        {
+          "text": "Testul cu apă de brom deosebește:",
+          "options": [
+            "alcanii de gaze",
+            "hidrocarburile nesaturate de cele saturate",
+            "lichidele de solide",
+            "metalele de nemetale"
+          ],
+          "correct": 1,
+          "explanation": "Alchenele și alchinele decolorează apa de brom (adiție); alcanii nu."
+        }
+      ]
+    }
+  ]
+}

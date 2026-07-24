@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#05080f">
+  <meta name="description" content="Laborator de chimie interactiv: tabel periodic cu 118 elemente și ilustrații, reactor cu egalarea ecuațiilor, experimente ghidate animate, test și calculator de masă molară.">
+  <link rel="icon" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="lab.css">
+  <title>Laborator de chimie – Chimie Academy</title>
+</head>
+<body class="dark">
+
+  <header class="lab-topbar">
+    <div class="lab-container">
+      <div class="lab-topbar-inner">
+        <a class="lab-brand" href="../index.php" title="Înapoi la Chimie Academy">
+          <span class="lab-cell" aria-hidden="true"><i>6</i><b>C</b></span>
+          <span class="lab-brand-name"><strong>Laboratorul</strong><small>Chimie Academy</small></span>
+        </a>
+        <div class="lab-search">
+          <input type="search" id="labSearch" placeholder="Caută un element… (ex: cupru, Fe, oxigen)" autocomplete="off">
+        </div>
+        <button id="themeToggle" class="lab-iconbtn" type="button" aria-label="Schimbă tema" title="Schimbă tema">🌙</button>
+        <a href="../index.php" class="lab-iconbtn" aria-label="Înapoi la portal" title="Înapoi la portal">↩</a>
+      </div>
+      <nav class="lab-dock" aria-label="Navigare laborator">
+        <a href="#sec-tabel" class="active">🧬 Tabel periodic</a>
+        <a href="#sec-reactor">⚗️ Reactor</a>
+        <a href="#gxLab">🧪 Experimente</a>
+        <a href="#egGame">🔮 Joc elemente</a>
+        <a href="#quizStartBtn">🎲 Test reacții</a>
+        <a href="#molarInput">🧮 Masă molară</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="lab-container container">
+
+    <section class="lab-hero">
+      <div class="eyebrow">Laborator virtual · 118 elemente</div>
+      <h1>Un <span class="grad-text">laborator întreg</span>, în browserul tău.</h1>
+      <p>Explorează tabelul periodic cu ilustrații pentru fiecare element, combină reactivi în reactor cu ecuații egalate automat, rulează experimente ghidate și testează-te — totul fără cont, direct de aici.</p>
+    </section>
+
+    <section class="lab-section" id="sec-tabel">
+      <div class="lab-section-head">
+        <h2>🧬 Tabelul periodic interactiv</h2>
+        <span class="lab-kicker">Apasă pe un element · caută-l din bara de sus</span>
+      </div>
+      <div class="lab-panel">
+        <div class="legend periodic-legend">
+          <span><i class="legend-box cat-nemetal"></i>Nemetal</span>
+          <span><i class="legend-box cat-gaz-nobil"></i>Gaz nobil</span>
+          <span><i class="legend-box cat-metal-alcalin"></i>Metal alcalin</span>
+          <span><i class="legend-box cat-metal-alcalino-pamantos"></i>Metal alcalino-pământos</span>
+          <span><i class="legend-box cat-metaloid"></i>Metaloid</span>
+          <span><i class="legend-box cat-halogen"></i>Halogen</span>
+          <span><i class="legend-box cat-metal-post-tranzitie"></i>Metal post-tranziție</span>
+          <span><i class="legend-box cat-metal-tranzitie"></i>Metal de tranziție</span>
+          <span><i class="legend-box cat-lantanid"></i>Lantanid</span>
+          <span><i class="legend-box cat-actinid"></i>Actinid</span>
+        </div>
+        <div class="mobile-scroll-hint">Pe telefon, glisează tabelul stânga-dreapta ca să vezi toate grupele.</div>
+        <div class="periodic-scroll">
+          <div id="periodicTable" class="periodic-table" aria-label="Tabel periodic interactiv"></div>
+        </div>
+        <div class="result" id="rezultat">
+          <div class="periodic-empty">Selectează un element din tabel — vei vedea proprietățile lui și o ilustrație a aspectului real.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lab-section" id="sec-reactor">
+      <div class="lab-section-head">
+        <h2>⚗️ Reactorul de ecuații</h2>
+        <span class="lab-kicker">Scrie doi reactivi · ecuația se egalează automat</span>
+      </div>
+<div class="search-wrap periodic-wrap">
+  <h1 style="font-size: clamp(1.65rem, 6vw, 2.6em);">Tabel periodic interactiv (118 elemente)</h1>
+  <div class="hint" style="text-align:center; margin-bottom:12px;">Apasă pe un element ca să vezi rapid informațiile lui.</div>
+  <div class="legend periodic-legend">
+    <span><i class="legend-box cat-nemetal"></i>Nemetal</span>
+    <span><i class="legend-box cat-gaz-nobil"></i>Gaz nobil</span>
+    <span><i class="legend-box cat-metal-alcalin"></i>Metal alcalin</span>
+    <span><i class="legend-box cat-metal-alcalino-pamantos"></i>Metal alcalino-pământos</span>
+    <span><i class="legend-box cat-metaloid"></i>Metaloid</span>
+    <span><i class="legend-box cat-halogen"></i>Halogen</span>
+    <span><i class="legend-box cat-metal-post-tranzitie"></i>Metal post-tranziție</span>
+    <span><i class="legend-box cat-metal-tranzitie"></i>Metal de tranziție</span>
+    <span><i class="legend-box cat-lantanid"></i>Lantanid</span>
+    <span><i class="legend-box cat-actinid"></i>Actinid</span>
+  </div>
+  <div class="mobile-scroll-hint">Pe telefon, glisează tabelul stânga-dreapta ca să vezi toate grupele.</div>
+  <div class="periodic-scroll">
+    <div id="periodicTable" class="periodic-table" aria-label="Tabel periodic interactiv"></div>
+  </div>
+  <div class="result" id="rezultat">
+    <div class="periodic-empty">Selectează un element din tabel pentru a vedea proprietățile lui.</div>
+  </div>
+  </div>
+
+  <hr style="margin:60px;">
+
+  <h1 style="font-size: clamp(1.5rem, 5.5vw, 2.3em);">Reacții chimice (nivel clasa a VII-a / a VIII-a)</h1>
+  <div class="panel">
+    <div class="hint">Scrie formule (ex: HCl, H2SO4, NaOH, NaCl, AgNO3, BaCl2, Na2SO4, Na2CO3, CaO, CO2, O2, Cl2, CH4 etc.)</div>
+    <div style="margin-top:12px; text-align:center;">
+      <div class="rx-reactants-row">
+        <div class="rx-input-wrap">
+          <input type="text" id="react1" placeholder="Reactant 1 (ex: NaCl)">
+          <button type="button" class="rx-mini-btn ghost" onclick="clearReactant(1)" title="Șterge reactantul 1">Șterge</button>
+        </div>
+        <div class="rx-input-wrap">
+          <input type="text" id="react2" placeholder="Reactant 2 (ex: AgNO3)">
+          <button type="button" class="rx-mini-btn ghost" onclick="clearReactant(2)" title="Șterge reactantul 2">Șterge</button>
+        </div>
+      </div>
+      <br><br>
+      <button onclick="reaction()">Reacționează</button>
+      <div id="rxActions" class="rx-actions" style="display:none;">
+        <button id="copyBtn" class="rx-mini-btn ghost" type="button" onclick="copyCurrentReaction()" title="Copiază ecuația">📋 Copiază</button>
+        <button id="favBtn" class="rx-mini-btn secondary" type="button" onclick="toggleFavoriteCurrent()" title="Adaugă/Șterge din favorite">⭐ Favorit</button>
+      </div>
+      <div id="reactResult" class="bigResult"></div>
+    </div>
+
+    <div class="hint" style="margin-top:16px;">Exemple rapide (apasă pe ele):</div>
+    <div class="chips">
+      <div class="chip" onclick="setRx('HCl','NaOH')">HCl + NaOH</div>
+      <div class="chip" onclick="setRx('H2SO4','NaOH')">H2SO4 + NaOH</div>
+      <div class="chip" onclick="setRx('CO2','NaOH')">CO2 + NaOH</div>
+      <div class="chip" onclick="setRx('CaO','HCl')">CaO + HCl</div>
+      <div class="chip" onclick="setRx('NaCl','AgNO3')">NaCl + AgNO3</div>
+      <div class="chip" onclick="setRx('BaCl2','Na2SO4')">BaCl2 + Na2SO4</div>
+      <div class="chip" onclick="setRx('CuSO4','NaOH')">CuSO4 + NaOH</div>
+      <div class="chip" onclick="setRx('FeCl3','NaOH')">FeCl3 + NaOH</div>
+      <div class="chip" onclick="setRx('Na2CO3','HCl')">Na2CO3 + HCl</div>
+      <div class="chip" onclick="setRx('Zn','HCl')">Zn + HCl</div>
+      <div class="chip" onclick="setRx('Na','H2O')">Na + H2O</div>
+      <div class="chip" onclick="setRx('Mg','O2')">Mg + O2</div>
+      <div class="chip" onclick="setRx('Fe','Cl2')">Fe + Cl2</div>
+      <div class="chip" onclick="setRx('CH4','O2')">CH4 + O2</div>
+      <div class="chip" onclick="setRx('CaCO3','')">CaCO3 (descomp.)</div>
+      <div class="chip" onclick="setRx('NaHCO3','')">NaHCO3 (descomp.)</div>
+      <div class="chip" onclick="setRx('Cu(OH)2','')">Cu(OH)2 (descomp.)</div>
+    </div>
+
+    <div class="hint" style="margin-top:16px;">Istoric (ultimele 10):</div>
+    <div id="hist" style="margin-top:6px; font-size:1.05em; color:#2e7d32;"></div>
+
+    <div class="fav-wrap">
+      <div class="hint" style="margin-top:14px;">Favorite ⭐ (se salvează pe dispozitivul tău):</div>
+      <div id="favList" class="fav-list"></div>
+    </div>
+
+    <div class="quiz-wrap">
+      <div class="hint" style="margin-top:6px;">Test (10 reacții la întâmplare din listă): alege varianta corectă.</div>
+      <div class="quiz-controls">
+        <button id="quizStartBtn" class="rx-mini-btn secondary" type="button" onclick="startQuiz10()">🎲 Generează 10</button>
+        <button id="quizSubmitBtn" class="rx-mini-btn ghost" type="button" onclick="submitQuiz()" style="display:none;">✅ Trimite</button>
+        <button id="quizSaveBtn" class="rx-mini-btn secondary" type="button" onclick="saveQuizReport()" style="display:none;">💾 Salvează testul</button>
+        <button id="quizResetBtn" class="rx-mini-btn ghost" type="button" onclick="resetQuiz()" style="display:none;">🧹 Resetează</button>
+      </div>
+      <div id="quizBox" class="quiz-box"></div>
+    </div>
+  </div>
+
+    <div class="calc-wrap">
+      <div class="hint">Calculator de masă molară: scrie formula (ex: <b>H2SO4</b>, <b>Ca(OH)2</b>, <b>2Al2(SO4)3</b>). Folosește mase atomice aproximative (rotunjite).</div>
+      <div class="calc-controls">
+        <input id="molarInput" type="text" placeholder="Ex: Ca(OH)2 sau 2H2SO4 (coeficientul e opțional)" />
+        <button class="rx-mini-btn secondary" type="button" onclick="calcMolarMass()">🧮 Calculează</button>
+        <button class="rx-mini-btn ghost" type="button" onclick="clearMolarCalc()">🧹 Șterge</button>
+      </div>
+      <div id="molarOut" class="calc-out" style="display:none;"></div>
+    </div>
+
+  
+    </section>
+
+  </main>
+
+  <footer class="lab-footer">
+    <div class="lab-container">
+      Laboratorul Chimie Academy · funcționează complet offline, fără cont ·
+      <a href="laborator-clasic.html">versiunea clasică</a> ·
+      <a href="../index.php">înapoi la portal</a>
+    </div>
+  </footer>
+
+  <script src="engine.js"></script>
+  <script src="element-visuals.js"></script>
+  <script src="experiments.js"></script>
+</body>
+</html>

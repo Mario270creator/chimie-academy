@@ -1,0 +1,437 @@
+/* ============================================================
+   LABORATOR · skin futurist „Laborator de noapte"
+   Se încarcă ULTIMUL: rafinează vizual fără a schimba logica.
+   Respectă temele existente: light / dark (body.dark) / neon (body.neon)
+   ============================================================ */
+
+:root {
+  --fx-cyan: #38e1ff;
+  --fx-violet: #8f7bff;
+  --fx-green: #3cf0ae;
+  --fx-rose: #ff5d7d;
+  --fx-grad: linear-gradient(135deg, var(--fx-cyan), var(--fx-violet));
+  --fx-font-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --fx-font-body: "Manrope", "Segoe UI", system-ui, sans-serif;
+}
+body.dark, body.neon {
+  --fx-surface: rgba(15, 23, 44, 0.62);
+  --fx-line: rgba(148, 178, 255, 0.16);
+  --fx-line-strong: rgba(148, 178, 255, 0.34);
+}
+body:not(.dark):not(.neon) {
+  --fx-cyan: #0692c6;
+  --fx-violet: #6753ef;
+  --fx-green: #069c6f;
+  --fx-rose: #de3b62;
+  --fx-grad: linear-gradient(135deg, #08a6e0, #7461ff);
+  --fx-surface: rgba(255, 255, 255, 0.78);
+  --fx-line: rgba(26, 44, 96, 0.14);
+  --fx-line-strong: rgba(26, 44, 96, 0.30);
+}
+
+body {
+  font-family: var(--fx-font-body) !important;
+}
+h1, h2, h3, .brand-title, .section-title {
+  font-family: var(--fx-font-display) !important;
+  letter-spacing: -0.015em;
+}
+
+/* fundal cu „soluții" luminoase */
+body.dark::before, body.neon::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(44rem 28rem at 10% -6%, rgba(56, 225, 255, 0.10), transparent 60%),
+    radial-gradient(40rem 26rem at 94% 10%, rgba(143, 123, 255, 0.12), transparent 62%),
+    radial-gradient(34rem 26rem at 50% 115%, rgba(60, 240, 174, 0.07), transparent 60%);
+}
+
+/* topbar de sticlă */
+.topbar {
+  backdrop-filter: blur(16px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(150%) !important;
+  border-bottom: 1px solid var(--fx-line) !important;
+}
+.brand-title {
+  background: var(--fx-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+}
+
+/* titlul principal */
+.container > .search-wrap h1,
+.periodic-wrap h1 {
+  background: var(--fx-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* celulele din tabelul periodic: glow + lift */
+.element-cell {
+  border-radius: 9px !important;
+  transition: transform 0.16s cubic-bezier(0.22, 0.8, 0.3, 1), box-shadow 0.16s, filter 0.16s !important;
+  cursor: pointer;
+}
+.element-cell:hover {
+  transform: translateY(-3px) scale(1.07);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35), 0 0 16px rgba(56, 225, 255, 0.35) !important;
+  filter: saturate(1.25) brightness(1.08);
+  z-index: 5;
+}
+body:not(.dark):not(.neon) .element-cell:hover {
+  box-shadow: 0 8px 22px rgba(28, 44, 100, 0.20), 0 0 14px rgba(8, 166, 224, 0.30) !important;
+}
+
+/* carduri și panouri: sticlă */
+.card, .search-wrap, .lab-side-card, .lab-preview-card,
+.lab-mini-section, .compound-card, .element-visual-card, .lab-launchpad {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: var(--fx-line) !important;
+  transition: border-color 0.2s, transform 0.2s cubic-bezier(0.22, 0.8, 0.3, 1), box-shadow 0.2s;
+}
+.lab-preview-card:hover, .compound-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--fx-line-strong) !important;
+}
+
+/* butoane */
+.btn-primary, .sim-primary-trigger, #quizStartBtn, #quizSubmitBtn {
+  background: var(--fx-grad) !important;
+  border: none !important;
+  color: #041018 !important;
+  font-weight: 800 !important;
+  box-shadow: 0 6px 20px rgba(56, 225, 255, 0.28) !important;
+  transition: transform 0.16s cubic-bezier(0.22, 0.8, 0.3, 1), box-shadow 0.16s !important;
+}
+body:not(.dark):not(.neon) .btn-primary,
+body:not(.dark):not(.neon) .sim-primary-trigger,
+body:not(.dark):not(.neon) #quizStartBtn,
+body:not(.dark):not(.neon) #quizSubmitBtn { color: #ffffff !important; }
+.btn-primary:hover, .sim-primary-trigger:hover, #quizStartBtn:hover, #quizSubmitBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(56, 225, 255, 0.4) !important;
+}
+.icon-btn {
+  border: 1px solid var(--fx-line) !important;
+  transition: transform 0.16s, border-color 0.16s !important;
+}
+.icon-btn:hover { transform: rotate(14deg); border-color: var(--fx-line-strong) !important; }
+
+/* quick-nav plutitor de sticlă */
+.lab-quick-nav {
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid var(--fx-line-strong) !important;
+  box-shadow: 0 16px 44px rgba(2, 6, 18, 0.4) !important;
+}
+.lab-quick-link { transition: transform 0.14s, color 0.14s !important; }
+.lab-quick-link:hover { transform: translateY(-1px); color: var(--fx-cyan) !important; }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--fx-cyan), var(--fx-violet));
+  border-radius: 99px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+::selection { background: rgba(56, 225, 255, 0.30); }
+
+/* ============================================================
+   EXPERIMENTE GHIDATE (gx-*)
+   ============================================================ */
+.gx-section {
+  margin: 34px 0;
+  padding: clamp(18px, 3vw, 28px);
+  border-radius: 22px;
+  border: 1px solid var(--fx-line);
+  background: var(--fx-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.gx-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+.gx-head h2 { margin: 0; font-size: clamp(1.3rem, 3vw, 1.7rem); }
+.gx-sub { opacity: 0.75; font-size: 0.92rem; margin: 0 0 16px; }
+
+.gx-picker { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.gx-chip {
+  font-family: var(--fx-font-body);
+  font-weight: 700;
+  font-size: 0.84rem;
+  padding: 8px 14px;
+  border-radius: 99px;
+  border: 1px solid var(--fx-line);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 0.16s, background 0.16s, transform 0.16s;
+}
+.gx-chip:hover { transform: translateY(-1px); border-color: var(--fx-line-strong); }
+.gx-chip.active {
+  background: var(--fx-grad);
+  border-color: transparent;
+  color: #041018;
+}
+body:not(.dark):not(.neon) .gx-chip.active { color: #fff; }
+
+.gx-stage-grid {
+  display: grid;
+  grid-template-columns: minmax(240px, 340px) 1fr;
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 760px) { .gx-stage-grid { grid-template-columns: 1fr; } }
+
+/* scena cu paharul */
+.gx-stage {
+  position: relative;
+  height: 340px;
+  border-radius: 18px;
+  border: 1px solid var(--fx-line);
+  background:
+    radial-gradient(18rem 10rem at 50% 0%, rgba(56, 225, 255, 0.08), transparent 70%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent);
+  display: grid;
+  place-items: end center;
+  overflow: hidden;
+  padding-bottom: 24px;
+}
+.gx-beaker {
+  position: relative;
+  width: 150px;
+  height: 190px;
+  border: 3px solid rgba(190, 215, 255, 0.55);
+  border-top: none;
+  border-radius: 0 0 26px 26px;
+  background: rgba(200, 225, 255, 0.05);
+  box-shadow: inset 0 0 24px rgba(190, 215, 255, 0.09);
+}
+.gx-beaker::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -12px; right: -12px;
+  height: 3px;
+  background: rgba(190, 215, 255, 0.55);
+  border-radius: 3px;
+}
+.gx-liquid {
+  position: absolute;
+  left: 3px; right: 3px; bottom: 3px;
+  height: 55%;
+  border-radius: 0 0 22px 22px;
+  background: rgba(160, 210, 255, 0.25);
+  transition: background 0.9s ease, height 0.9s ease, filter 0.9s ease;
+  overflow: hidden;
+}
+.gx-liquid::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.22);
+  filter: blur(3px);
+}
+.gx-bubble {
+  position: absolute;
+  bottom: -12px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  animation: gx-rise linear forwards;
+}
+@keyframes gx-rise {
+  from { transform: translateY(0) scale(0.7); opacity: 0.9; }
+  to { transform: translateY(-170px) scale(1.15); opacity: 0; }
+}
+.gx-grain {
+  position: absolute;
+  top: -10px;
+  width: 6px; height: 6px;
+  border-radius: 2px;
+  animation: gx-sink 1.4s ease-in forwards;
+}
+@keyframes gx-sink {
+  from { transform: translateY(0) rotate(0); opacity: 1; }
+  to { transform: translateY(150px) rotate(140deg); opacity: 0.95; }
+}
+.gx-sediment {
+  position: absolute;
+  left: 3px; right: 3px; bottom: 3px;
+  height: 0;
+  border-radius: 0 0 22px 22px;
+  transition: height 1.2s ease, background 0.8s ease;
+}
+.gx-flame {
+  position: absolute;
+  bottom: -4px; left: 50%;
+  transform: translateX(-50%);
+  width: 46px; height: 60px;
+  border-radius: 50% 50% 40% 40%;
+  filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.4s;
+  animation: gx-flicker 0.7s ease-in-out infinite alternate;
+}
+@keyframes gx-flicker {
+  from { transform: translateX(-50%) scaleY(1); }
+  to { transform: translateX(-50%) scaleY(1.14) scaleX(0.94); }
+}
+.gx-smoke {
+  position: absolute;
+  top: 6px; left: 50%;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: rgba(230, 235, 245, 0.45);
+  filter: blur(4px);
+  animation: gx-smoke-up 1.8s ease-out forwards;
+}
+@keyframes gx-smoke-up {
+  from { transform: translate(-50%, 0) scale(0.7); opacity: 0.8; }
+  to { transform: translate(-50%, -110px) scale(2.4); opacity: 0; }
+}
+.gx-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+.gx-stage-label {
+  position: absolute;
+  top: 12px; left: 14px;
+  font-family: var(--fx-font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* panoul de narațiune */
+.gx-side { display: grid; gap: 12px; }
+.gx-eq {
+  font-family: var(--fx-font-display);
+  font-size: clamp(1rem, 2.4vw, 1.25rem);
+  font-weight: 700;
+  padding: 13px 16px;
+  border-radius: 13px;
+  border: 1px solid var(--fx-line-strong);
+  background: linear-gradient(135deg, rgba(56, 225, 255, 0.10), rgba(143, 123, 255, 0.10));
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.gx-narration {
+  min-height: 84px;
+  padding: 14px 16px;
+  border-radius: 13px;
+  border: 1px solid var(--fx-line);
+  background: rgba(128, 158, 255, 0.05);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+.gx-narration strong { color: var(--fx-cyan); }
+.gx-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.gx-badge {
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: 99px;
+  border: 1px solid var(--fx-line);
+  opacity: 0.9;
+}
+.gx-badge.safety { border-color: color-mix(in srgb, var(--fx-rose) 50%, transparent); color: var(--fx-rose); }
+.gx-badge.type { border-color: color-mix(in srgb, var(--fx-violet) 55%, transparent); color: var(--fx-violet); }
+.gx-controls { display: flex; gap: 10px; flex-wrap: wrap; }
+.gx-btn {
+  font-family: var(--fx-font-body);
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 11px 18px;
+  border-radius: 12px;
+  border: 1px solid var(--fx-line);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.16s, border-color 0.16s, box-shadow 0.16s;
+}
+.gx-btn:hover { transform: translateY(-2px); border-color: var(--fx-line-strong); }
+.gx-btn.primary {
+  background: var(--fx-grad);
+  border: none;
+  color: #041018;
+  box-shadow: 0 6px 20px rgba(56, 225, 255, 0.26);
+}
+body:not(.dark):not(.neon) .gx-btn.primary { color: #fff; }
+.gx-btn:disabled { opacity: 0.45; cursor: default; transform: none; }
+.gx-progress {
+  display: flex;
+  gap: 6px;
+}
+.gx-progress i {
+  width: 26px; height: 5px;
+  border-radius: 99px;
+  background: var(--fx-line);
+  transition: background 0.3s;
+}
+.gx-progress i.done { background: var(--fx-grad); }
+
+/* ============================================================
+   JOC „GHICEȘTE ELEMENTUL" (eg-*)
+   ============================================================ */
+.eg-grid { display: grid; gap: 14px; }
+.eg-clues { display: grid; gap: 8px; }
+.eg-clue {
+  padding: 11px 15px;
+  border-radius: 12px;
+  border: 1px solid var(--fx-line);
+  border-left: 3px solid var(--fx-cyan);
+  background: rgba(128, 158, 255, 0.05);
+  font-size: 0.95rem;
+  animation: gx-clue-in 0.4s cubic-bezier(0.22, 0.8, 0.3, 1);
+}
+.eg-clue:nth-child(2) { border-left-color: var(--fx-violet); }
+.eg-clue:nth-child(3) { border-left-color: var(--fx-green); }
+@keyframes gx-clue-in {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: none; }
+}
+.eg-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.eg-option {
+  font-family: var(--fx-font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 13px;
+  border-radius: 12px;
+  border: 1px solid var(--fx-line);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.14s, border-color 0.14s, box-shadow 0.14s;
+}
+.eg-option:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--fx-line-strong); }
+.eg-option.good { border-color: var(--fx-green); box-shadow: inset 0 0 0 1px var(--fx-green), 0 0 16px color-mix(in srgb, var(--fx-green) 30%, transparent); }
+.eg-option.bad { border-color: var(--fx-rose); box-shadow: inset 0 0 0 1px var(--fx-rose); }
+.eg-option:disabled { cursor: default; }
+.eg-score-row { display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.9rem; opacity: 0.85; }
+.eg-score-row b {
+  font-family: var(--fx-font-display);
+  background: var(--fx-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.eg-feedback { min-height: 1.4em; font-weight: 700; }
+.eg-feedback.good { color: var(--fx-green); }
+.eg-feedback.bad { color: var(--fx-rose); }
+
+@media (prefers-reduced-motion: reduce) {
+  .gx-bubble, .gx-grain, .gx-smoke, .gx-flame { animation: none !important; }
+  * { transition-duration: 0.01ms !important; }
+}
